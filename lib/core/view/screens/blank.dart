@@ -1,4 +1,4 @@
-import 'package:evpoint/util/dim.dart';
+import 'package:evpoint/core/utils/dimension_util.dart';
 import 'package:flutter/material.dart';
 
 class BlankPage extends StatelessWidget {
@@ -17,8 +17,8 @@ class BlankPage extends StatelessWidget {
           child: Column(
             children: [
               Positioned(
-                top: height(context, 0.5),
-                left: width(context, 0.5),
+                top: DimensionUtil.height(context, 0.5),
+                left: DimensionUtil.width(context, 0.5),
                 child: const Text("Coming Soon....."),
               ),
             ],
