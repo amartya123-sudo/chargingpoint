@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:evpoint/core/view/screens/blank.dart';
 import 'package:evpoint/core/view/screens/maps.dart';
@@ -383,9 +385,9 @@ class _OverviewState extends State<Overview>
         ),
       ),
       bottomNavigationBar: Container(
-        color: Colors.transparent, // Transparent container
+        color:const Color(0xFFCBE9ED), // Transparent container
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent, // Transparent background
+          backgroundColor: Colors.transparent.withOpacity(0), // Transparent background
           elevation: 0, // Remove shadow
           type: BottomNavigationBarType.fixed,
           items: const [
