@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:evpoint/core/view/screens/blank.dart';
 import 'package:evpoint/core/view/screens/maps.dart';
-import 'package:evpoint/core/utils/dimension_util.dart';
 import 'package:evpoint/core/view/screens/dashboard.dart';
 import 'package:evpoint/core/services/background_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -48,14 +47,14 @@ class _OverviewState extends State<Overview>
       (text) {
         setState(() {
           _text = text;
-          if (_text.isNotEmpty) {
-            backendService.getResponse(_text, (response) {
-              backendService.speak(response);
-            }, (error) {
-              print(error);
-            });
-          }
         });
+        if (_text.isNotEmpty) {
+          backendService.getResponse(_text, (response) {
+            backendService.speak(response);
+          }, (error) {
+            print(error);
+          });
+        }
       },
       () {
         // When listening stops, close the modal
@@ -187,70 +186,65 @@ class _OverviewState extends State<Overview>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: width,
           decoration: const BoxDecoration(
             color: Color(0xFFCBE9ED),
           ),
           child: Stack(
             children: <Widget>[
               Positioned(
-                top: DimensionUtil.height(context, 0.395),
-                left: DimensionUtil.width(context, 0.074),
-                child: const SizedBox(
-                  child: Text(
-                    'LET\'S RIDE THE',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24.81,
-                      fontFamily: 'Inter',
-                      height: 0.03,
-                      letterSpacing: 18.11,
-                    ),
+                top: height * 0.395,
+                left: width * 0.074,
+                child: const Text(
+                  'LET\'S RIDE THE',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24.81,
+                    fontFamily: 'Inter',
+                    height: 1.5,
+                    letterSpacing: 1.5,
                   ),
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.41),
-                left: DimensionUtil.width(context, 0.074),
-                child: const SizedBox(
-                  width: 972,
-                  height: 179.15,
-                  child: Text(
-                    'FUTURE',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 114.84,
-                      fontFamily: 'Inter',
-                      height: 0,
-                      letterSpacing: -4.59,
-                    ),
+                top: height * 0.41,
+                left: width * 0.074,
+                child: const Text(
+                  'FUTURE',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 114.84,
+                    fontFamily: 'Inter',
+                    height: 1,
+                    letterSpacing: -4.59,
                   ),
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.6),
-                left: DimensionUtil.width(context, 0.074),
-                child: const SizedBox(
-                  child: Text(
-                    'Innovation & You',
-                    style: TextStyle(
-                      color: Color(0xFF42454A),
-                      fontSize: 18.37,
-                      fontFamily: 'Inter',
-                    ),
+                top: height * 0.6,
+                left: width * 0.074,
+                child: const Text(
+                  'Innovation & You',
+                  style: TextStyle(
+                    color: Color(0xFF42454A),
+                    fontSize: 18.37,
+                    fontFamily: 'Inter',
                   ),
                 ),
               ),
               Positioned(
-                bottom: DimensionUtil.height(context, -0.025),
-                left: DimensionUtil.width(context, 0.45),
+                bottom: height * -0.025,
+                left: width * 0.45,
                 child: ClipOval(
                   child: Container(
-                    height: 1400,
-                    width: 1500,
+                    height: height * 1.4,
+                    width: width * 1.5,
                     decoration: const ShapeDecoration(
                       color: Color(0xFF9ADFD4),
                       shape: OvalBorder(),
@@ -259,8 +253,8 @@ class _OverviewState extends State<Overview>
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.75),
-                left: DimensionUtil.width(context, 0.2),
+                top: height * 0.78,
+                left: width * 0.2,
                 child: ClipRect(
                   child: Container(
                     decoration: ShapeDecoration(
@@ -271,8 +265,8 @@ class _OverviewState extends State<Overview>
                         borderRadius: BorderRadius.circular(17.11),
                       ),
                     ),
-                    height: DimensionUtil.height(context, 0.141),
-                    width: DimensionUtil.width(context, 0.635),
+                    height: height * 0.141,
+                    width: width * 0.635,
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -314,25 +308,23 @@ class _OverviewState extends State<Overview>
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.328),
-                left: DimensionUtil.width(context, 0.59),
-                child: const SizedBox(
-                  child: Text(
-                    'EV-2',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 175,
-                      fontFamily: 'Familjen Grotesk',
-                    ),
+                top: height * 0.328,
+                left: width * 0.59,
+                child: const Text(
+                  'EV-2',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 175,
+                    fontFamily: 'Familjen Grotesk',
                   ),
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.205),
-                left: DimensionUtil.width(context, 0.421),
+                top: height * 0.205,
+                left: width * 0.421,
                 child: Container(
-                  height: DimensionUtil.height(context, 0.6),
-                  width: DimensionUtil.width(context, 0.5),
+                  height: height * 0.6,
+                  width: width * 0.5,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/image.png'),
@@ -341,10 +333,10 @@ class _OverviewState extends State<Overview>
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.069),
-                right: DimensionUtil.width(context, 0.09),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(shape: const CircleBorder()),
+                top: height * 0.05,
+                right: width * 0.02,
+                child: FloatingActionButton(
+                  shape: const CircleBorder(),
                   child: const Icon(Icons.mic),
                   onPressed: () {
                     _showListeningModal(context);
@@ -353,8 +345,8 @@ class _OverviewState extends State<Overview>
                 ),
               ),
               Positioned(
-                top: DimensionUtil.height(context, 0.05),
-                left: DimensionUtil.width(context, 0.03),
+                top: height * 0.05,
+                left: width * 0.02,
                 child: GestureDetector(
                   onTap: _onTap,
                   child: IconButton(
@@ -366,8 +358,8 @@ class _OverviewState extends State<Overview>
                       setState(() {
                         _isLocked = !_isLocked;
                       });
-                      // Adding a delay to allow the UI to update
-                      if (!_isLocked) {
+// Adding a delay to allow the UI to update
+                      if (_isLocked) {
                         await Future.delayed(const Duration(milliseconds: 300));
                         Navigator.push(
                           context,
@@ -385,28 +377,23 @@ class _OverviewState extends State<Overview>
         ),
       ),
       bottomNavigationBar: Container(
-        color:const Color(0xFFCBE9ED), // Transparent container
+        color: const Color(0xFFCBE9ED), // Transparent container
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent.withOpacity(0), // Transparent background
+          backgroundColor:
+              Colors.transparent.withOpacity(0), // Transparent background
           elevation: 0, // Remove shadow
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Profile',
+              label: "",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.gps_fixed),
-              label: 'GPS',
+              label: "",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.apps),
-              label: 'Apps',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.contact_mail),
-              label: 'Contact',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.apps), label: ""),
+            BottomNavigationBarItem(icon: Icon(Icons.contact_mail), label: ""),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.blue,
