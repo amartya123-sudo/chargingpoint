@@ -1,6 +1,8 @@
+// ignore_for_file: use_build_context_synchronously, unused_field
+
 import 'package:flutter/material.dart';
-import 'package:evpoint/pages/overview.dart';
-import 'package:evpoint/util/dim.dart';
+import 'package:evpoint/core/view/screens/overview.dart';
+import 'package:evpoint/core/utils/dimension_util.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class Dashboard extends StatefulWidget {
@@ -15,6 +17,7 @@ class _DashboardState extends State<Dashboard>
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _isPressed = false;
+  bool _isLocked = true;
   var fluttertts = FlutterTts();
 
   @override
@@ -26,7 +29,7 @@ class _DashboardState extends State<Dashboard>
     )..addListener(() {
         setState(() {});
       });
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+      _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
   }
 
   @override
@@ -76,8 +79,8 @@ class _DashboardState extends State<Dashboard>
           child: Stack(
             children: <Widget>[
               Positioned(
-                left: width(context, 0.2),
-                top: height(context, 0.3),
+                left: DimensionUtil.width(context, 0.2),
+                top: DimensionUtil.height(context, 0.3),
                 child: const SizedBox(
                   child: Text(
                     "Hello",
@@ -92,8 +95,8 @@ class _DashboardState extends State<Dashboard>
                 ),
               ),
               Positioned(
-                left: width(context, 0.2),
-                top: height(context, 0.3),
+                left: DimensionUtil.width(context, 0.2),
+                top: DimensionUtil.height(context, 0.3),
                 child: const SizedBox(
                   child: Text(
                     'NAMO',
@@ -108,8 +111,8 @@ class _DashboardState extends State<Dashboard>
                 ),
               ),
               Positioned(
-                left: width(context, 0.204),
-                top: height(context, 0.452),
+                left: DimensionUtil.width(context, 0.204),
+                top: DimensionUtil.height(context, 0.452),
                 child: const SizedBox(
                   child: Text(
                     'Simple and sleek design \nwith users in mind.',
@@ -122,8 +125,8 @@ class _DashboardState extends State<Dashboard>
                 ),
               ),
               Positioned(
-                top: height(context, 0.32),
-                left: width(context, 0.451),
+                top: DimensionUtil.height(context, 0.32),
+                left: DimensionUtil.width(context, 0.451),
                 child: ClipOval(
                   child: Container(
                     height: 1200,
@@ -136,12 +139,12 @@ class _DashboardState extends State<Dashboard>
                 ),
               ),
               Positioned(
-                top: height(context, 0),
-                right: width(context, 0),
+                top: DimensionUtil.height(context, 0),
+                right: DimensionUtil.width(context, 0),
                 child: ClipRect(
                   child: Container(
-                    height: height(context, 0.5),
-                    width: width(context, 0.07),
+                    height: DimensionUtil.height(context, 0.5),
+                    width: DimensionUtil.width(context, 0.07),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment(0.06, -1.00),
@@ -153,12 +156,12 @@ class _DashboardState extends State<Dashboard>
                 ),
               ),
               Positioned(
-                bottom: height(context, 0),
-                right: width(context, 0),
+                bottom: DimensionUtil.height(context, 0),
+                right: DimensionUtil.width(context, 0),
                 child: ClipRect(
                   child: Container(
-                    height: height(context, 0.5),
-                    width: width(context, 0.07),
+                    height: DimensionUtil.height(context, 0.5),
+                    width: DimensionUtil.width(context, 0.07),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment(0.00, -1.00),
@@ -170,44 +173,41 @@ class _DashboardState extends State<Dashboard>
                 ),
               ),
               Positioned(
-                top: height(context, 0.35),
-                left: width(context, 0.45),
+                top: DimensionUtil.height(context, 0.35),
+                left: DimensionUtil.width(context, 0.45),
                 child: GestureDetector(
                   onTap: _onTap,
-                  child: Transform.rotate(
-                    angle: _animation.value * 6.3, // 2 * pi for a full rotation
-                    child: ClipOval(
-                      child: Container(
-                        width: width(context, 0.11),
-                        height: height(context, 0.15),
-                        decoration: const ShapeDecoration(
-                          color: Color.fromARGB(54, 42, 31, 31),
-                          shape: OvalBorder(),
-                        ),
-                        child: Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, 0.0)
-                            ..rotateZ(0.01),
-                          child: const Icon(
-                            size: 90,
-                            Icons.lock,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child:  IconButton(
+          icon: Icon(
+            _isLocked ? Icons.lock : Icons.lock_open,
+            size: 50.0,
+          ),
+          onPressed: () async {
+            setState(() {
+              _isLocked = !_isLocked;
+            });
+
+            // Adding a delay to allow the UI to update
+            if (!_isLocked) {
+              await Future.delayed(const Duration(milliseconds: 300));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Overview()),
+              );
+            }
+          },
+        ),
                 ),
               ),
               Positioned(
-                top: height(context, 0.85),
-                left: width(context, 0.82),
+                top: DimensionUtil.height(context, 0.85),
+                left: DimensionUtil.width(context, 0.82),
                 child: Column(
                   children: [
                     const Text("Powered By"),
                     Container(
-                      height: height(context, 0.09),
-                      width: width(context, 0.09),
+                      height: DimensionUtil.height(context, 0.09),
+                      width: DimensionUtil.width(context, 0.09),
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/logo.png"),

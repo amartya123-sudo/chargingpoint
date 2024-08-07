@@ -1,11 +1,14 @@
-import 'dart:convert';
+// import 'dart:convert';
 
-import 'package:evpoint/schema/response.dart';
+// ignore_for_file: unused_field, library_private_types_in_public_api, unused_element, avoid_print
+
+// import 'package:evpoint/core/config/app_config.dart';
+// import 'package:evpoint/core/models/suggested_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:mapmyindia_gl/mapmyindia_gl.dart';
-import 'package:evpoint/util/dim.dart';
+import 'package:evpoint/core/utils/dimension_util.dart';
 
 class Maps extends StatefulWidget {
   const Maps({super.key});
@@ -184,12 +187,12 @@ class _MapsState extends State<Maps> {
                       },
                     ),
               Positioned(
-                top: height(context, 0.0),
-                left: width(context, 0.0),
-                right: width(context, 0.0),
+                top: DimensionUtil.height(context, 0.0),
+                left: DimensionUtil.width(context, 0.0),
+                right: DimensionUtil.width(context, 0.0),
                 child: Container(
-                  width: width(context, 1),
-                  height: height(context, 0.18),
+                  width: DimensionUtil.width(context, 1),
+                  height: DimensionUtil.height(context, 0.18),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
@@ -206,7 +209,7 @@ class _MapsState extends State<Maps> {
                           onChanged: (text) {
                             fetchSuggestions(text);
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Search for a location',
                           ),
                         ),

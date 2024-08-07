@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;

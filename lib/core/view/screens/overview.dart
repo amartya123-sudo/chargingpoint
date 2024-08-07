@@ -410,12 +410,14 @@
 //   }
 // }
 
-import 'package:evpoint/pages/blank.dart';
-import 'package:evpoint/pages/maps.dart';
+// ignore_for_file: use_build_context_synchronously, unused_field
+
+import 'package:evpoint/core/view/screens/blank.dart';
+import 'package:evpoint/core/view/screens/maps.dart';
 import 'package:flutter/material.dart';
-import 'package:evpoint/util/dim.dart';
-import 'package:evpoint/pages/dashboard.dart';
-import 'package:evpoint/service/background_service.dart';
+import 'package:evpoint/core/utils/dimension_util.dart';
+import 'package:evpoint/core/view/screens/dashboard.dart';
+import 'package:evpoint/core/services/background_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -430,6 +432,7 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _isPressed = false;
+  bool _isLocked = false; 
 
   final BackendService backendService = BackendService();
   String _text = '';
@@ -536,7 +539,7 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                   'Listening...',
                   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _isListening                            // Animation not working properly
                     ? AnimatedTextKit(
                         animatedTexts: [
@@ -572,8 +575,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
           child: Stack(
             children: <Widget>[
               Positioned(
-                top: height(context, 0.395),
-                left: width(context, 0.074),
+                top: DimensionUtil.height(context, 0.395),
+                left: DimensionUtil.width(context, 0.074),
                 child: const SizedBox(
                   child: Text(
                     'LET\'S RIDE THE',
@@ -588,8 +591,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.41),
-                left: width(context, 0.074),
+                top: DimensionUtil.height(context, 0.41),
+                left: DimensionUtil.width(context, 0.074),
                 child: const SizedBox(
                   width: 972,
                   height: 179.15,
@@ -606,8 +609,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.6),
-                left: width(context, 0.074),
+                top: DimensionUtil.height(context, 0.6),
+                left: DimensionUtil.width(context, 0.074),
                 child: const SizedBox(
                   child: Text(
                     'Innovation & You',
@@ -620,8 +623,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                bottom: height(context, -0.025),
-                left: width(context, 0.45),
+                bottom: DimensionUtil.height(context, -0.025),
+                left: DimensionUtil.width(context, 0.45),
                 child: ClipOval(
                   child: Container(
                     height: 1400,
@@ -634,11 +637,11 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.069),
-                left: width(context, 0.25),
+                top: DimensionUtil.height(context, 0.069),
+                left: DimensionUtil.width(context, 0.25),
                 child: ClipRect(
                   child: Container(
-                    width: width(context, 0.364),
+                    width: DimensionUtil.width(context, 0.364),
                     color: Colors.transparent,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -706,8 +709,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.8),
-                left: width(context, 0.2),
+                top: DimensionUtil.height(context, 0.8),
+                left: DimensionUtil.width(context, 0.2),
                 child: ClipRect(
                   child: Container(
                     decoration: ShapeDecoration(
@@ -718,8 +721,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                         borderRadius: BorderRadius.circular(17.11),
                       ),
                     ),
-                    height: height(context, 0.141),
-                    width: width(context, 0.635),
+                    height: DimensionUtil.height(context, 0.141),
+                    width: DimensionUtil.width(context, 0.635),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -761,8 +764,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.328),
-                left: width(context, 0.59),
+                top: DimensionUtil.height(context, 0.328),
+                left: DimensionUtil.width(context, 0.59),
                 child: const SizedBox(
                   child: Text(
                     'EV-2',
@@ -775,11 +778,11 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.205),
-                left: width(context, 0.421),
+                top: DimensionUtil.height(context, 0.205),
+                left: DimensionUtil.width(context, 0.421),
                 child: Container(
-                  height: height(context, 0.6),
-                  width: width(context, 0.5),
+                  height: DimensionUtil.height(context, 0.6),
+                  width: DimensionUtil.width(context, 0.5),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/image.png"),
@@ -788,9 +791,12 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.069),
-                right: width(context, 0.09),
+                top: DimensionUtil.height(context, 0.069),
+                right: DimensionUtil.width(context, 0.09),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder()
+                  ),
                   child: const Icon(Icons.mic),
                   onPressed: () {
                     _showListeningModal(context);
@@ -799,12 +805,12 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0),
-                right: width(context, 0),
+                top: DimensionUtil.height(context, 0),
+                right: DimensionUtil.width(context, 0),
                 child: ClipRect(
                   child: Container(
-                    height: height(context, 0.5),
-                    width: width(context, 0.07),
+                    height: DimensionUtil.height(context, 0.5),
+                    width: DimensionUtil.width(context, 0.07),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment(0.06, -1.00),
@@ -816,12 +822,12 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                bottom: height(context, 0),
-                right: width(context, 0),
+                bottom: DimensionUtil.height(context, 0),
+                right: DimensionUtil.width(context, 0),
                 child: ClipRect(
                   child: Container(
-                    height: height(context, 0.5),
-                    width: width(context, 0.07),
+                    height: DimensionUtil.height(context, 0.5),
+                    width: DimensionUtil.width(context, 0.07),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment(0.00, -1.00),
@@ -833,33 +839,30 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0.05),
-                left: width(context, 0.03),
+                top: DimensionUtil.height(context, 0.05),
+                left: DimensionUtil.width(context, 0.03),
                 child: GestureDetector(
                   onTap: _onTap,
-                  child: Transform.rotate(
-                    angle: _animation.value * 6.3, // 2 * pi for a full rotation
-                    child: ClipOval(
-                      child: Container(
-                        width: width(context, 0.1),
-                        height: height(context, 0.1),
-                        decoration: const ShapeDecoration(
-                          color: Color.fromARGB(54, 42, 31, 31),
-                          shape: OvalBorder(),
-                        ),
-                        child: Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, 0.0)
-                            ..rotateZ(0.01),
-                          child: const Icon(
-                            size: 70,
-                            Icons.lock,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child:  IconButton(
+          icon: Icon(
+            _isLocked ? Icons.lock : Icons.lock_open,
+            size: 50.0,
+          ),
+          onPressed: () async {
+            setState(() {
+              _isLocked = !_isLocked;
+            });
+
+            // Adding a delay to allow the UI to update
+            if (!_isLocked) {
+              await Future.delayed(const Duration(milliseconds: 300));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Dashboard()),
+              );
+            }
+          },
+        ),
                 ),
               ),
             ],
