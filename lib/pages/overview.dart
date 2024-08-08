@@ -412,6 +412,7 @@
 
 import 'package:evpoint/pages/blank.dart';
 import 'package:evpoint/pages/maps.dart';
+import 'package:evpoint/widgets/nearby.dart';
 import 'package:flutter/material.dart';
 import 'package:evpoint/util/dim.dart';
 import 'package:evpoint/pages/dashboard.dart';
@@ -502,7 +503,7 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
   void _navigateToMapsPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Maps()),
+      MaterialPageRoute(builder: (context) => NearbyUIWidget()),
     );
   }
 

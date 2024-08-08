@@ -128,6 +128,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      sha256: "7eae679e596a44fdf761853a706f74979f8dd3cd92cf4e23cae161fda091b847"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.2.6"
   google_generative_ai:
     dependency: "direct main"
     description:
@@ -240,6 +248,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.0"
+  mapmyindia_nearby_plugin:
+    dependency: "direct main"
+    description:
+      name: mapmyindia_nearby_plugin
+      sha256: "6ec64388842c2ecc754139b4fe9a879486512466567b844530ff56b40f12c57b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  mapmyindia_place_widget:
+    dependency: transitive
+    description:
+      name: mapmyindia_place_widget
+      sha256: e86b54a3e67883a22610e7de9af255fc6350d2f273c9beb4ab3f182fe6da911f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   matcher:
     dependency: transitive
     description:

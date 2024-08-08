@@ -11,10 +11,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   mapmyindia_gl: ^0.3.1
-  # mappls_gl: ^1.1.0
   location: ^7.0.0
-  # mappls_direction_plugin: ^1.0.0
-  # mappls_nearby_plugin: ^1.0.0
+  fluttertoast: ^8.0.6
   flutter_lints: ^2.0.0
   flutter_tts: ^3.3.3
   flutter_background_service: ^2.1.0
@@ -22,6 +20,7 @@ dependencies:
   google_generative_ai: ^0.4.3
   http: ^1.2.2
   animated_text_kit: ^4.2.0
+  mapmyindia_nearby_plugin: ^0.2.0
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
-import 'package:evpoint/schema/response.dart';
+import 'package:evpoint/widgets/autosuggest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:mapmyindia_gl/mapmyindia_gl.dart';
-import 'package:evpoint/util/dim.dart';
 
 class Maps extends StatefulWidget {
   const Maps({super.key});
@@ -17,10 +14,9 @@ class Maps extends StatefulWidget {
 class _MapsState extends State<Maps> {
   MapmyIndiaMapController? _controller;
   final Location _location = Location();
-  late TextEditingController _searchController;
   LatLng? _currentLocation;
   Symbol? _currentLocationSymbol;
-  List<String> suggestions = [];
+  bool showAutoSuggestWidget = false;
 
   static const String MAP_SDK_KEY = "8d6575c7a835972edece51fe1ecd6a5b";
   static const String REST_API_KEY = "8d6575c7a835972edece51fe1ecd6a5b";
@@ -32,7 +28,6 @@ class _MapsState extends State<Maps> {
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController();
     _fetchCurrentLocation();
 
     MapmyIndiaAccountManager.setMapSDKKey(MAP_SDK_KEY);
@@ -79,85 +74,6 @@ class _MapsState extends State<Maps> {
     }
   }
 
-  void _getCurrentLocation() async {
-    final locationData = await _location.getLocation();
-    final newLocation = LatLng(locationData.latitude!, locationData.longitude!);
-    setState(() {
-      _currentLocation = newLocation;
-    });
-    _controller!.moveCamera(
-      CameraUpdate.newLatLng(newLocation),
-    );
-    _addCurrentLocationMarker(newLocation);
-  }
-
-  void _fetchNearbyPlaces(LatLng latlng) async {
-    try {
-      NearbyResponse? nearbyResponse =
-          await MapmyIndiaNearby(keyword: "Charging Station", location: latlng)
-              .callNearby();
-      if (nearbyResponse != null && nearbyResponse.suggestedLocations != null) {
-        for (var place in nearbyResponse.suggestedLocations!) {
-          _controller!.addSymbol(
-            SymbolOptions(
-              geometry: LatLng(place.latitude!, place.longitude!),
-              iconImage: "nearby_place_icon",
-              iconSize: 1.0,
-            ),
-          );
-        }
-      }
-    } catch (e) {
-      if (e is PlatformException) {
-        print(e.code);
-      } else {
-        print(e.toString());
-      }
-    }
-  }
-
-  void _getNearbyPlaces() async {
-    final locationData = await _location.getLocation();
-    _fetchNearbyPlaces(LatLng(locationData.latitude!, locationData.longitude!));
-  }
-
-  void fetchSuggestions(String query) {
-    MapmyIndiaAutoSuggest(query: query).callAutoSuggest().then((response) {
-      // // Print the raw response for debugging
-      // print('Raw response: $response');
-
-      // // Check the type of the response
-      // print('Response type: ${response.runtimeType}');
-
-      // // Assuming response is a String, you may need to preprocess and convert it to JSON
-      // if (response is String) {
-      //   try {
-      //     // Decode the JSON string
-      //     final data = jsonDecode(response as String);
-
-      //     // Parse the response using the AutoSuggestResponse class
-      //     final autoSuggestResponse = AutoSuggestResponse.fromJson(data);
-
-      //     // Update the state with the parsed suggestions
-      //     setState(() {
-      //       suggestions = autoSuggestResponse.suggestedLocations.cast<String>();
-      //     });
-      //   } catch (e) {
-      //     print('Error parsing response: $e');
-      //   }
-      // } else {
-      //   print('Unexpected response type: ${response.runtimeType}');
-      // }
-      setState(() {
-        final sugLocation = response;
-        print(sugLocation);
-      });
-    }).onError((error, stackTrace) {
-      print('Error: $error');
-    });
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,55 +94,17 @@ class _MapsState extends State<Maps> {
                         zoom: 14.0,
                       ),
                       onStyleLoadedCallback: () {
-                        if (_currentLocation != null) {
-                          _addCurrentLocationMarker(_currentLocation!);
-                        }
+                        // if (_currentLocation != null) {
+                        //   _addCurrentLocationMarker(_currentLocation!);
+                        // }
+                        setState(() {
+                          showAutoSuggestWidget = true;
+                        });
                       },
                     ),
-              Positioned(
-                top: height(context, 0.0),
-                left: width(context, 0.0),
-                right: width(context, 0.0),
-                child: Container(
-                  width: width(context, 1),
-                  height: height(context, 0.18),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          onChanged: (text) {
-                            fetchSuggestions(text);
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Search for a location',
-                          ),
-                        ),
-                      ),
-                      // Expanded(
-                      //   child: ListView.builder(
-                      //     itemCount: suggestions.length,
-                      //     itemBuilder: (context, index) {
-                      //       final suggestion = suggestions[index];
-                      //       return ListTile(
-                      //         title: Text(suggestion.placeName),
-                      //         subtitle: Text(suggestion.addr),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-              ),
+              showAutoSuggestWidget && _controller != null
+                  ? Autosuggest(controller: _controller!)
+                  : Container(),
             ],
           ),
         ),
@@ -234,17 +112,3 @@ class _MapsState extends State<Maps> {
     );
   }
 }
-
-// class AutoSuggestResponse {
-//   final List<SuggestedLocation> suggestedLocations;
-
-//   AutoSuggestResponse({required this.suggestedLocations});
-
-//   factory AutoSuggestResponse.fromJson(Map<String, dynamic> json) {
-//     return AutoSuggestResponse(
-//       suggestedLocations: (json['suggestedLocations'] as List)
-//           .map((i) => SuggestedLocation.fromJson(i))
-//           .toList(),
-//     );
-//   }
-// }
