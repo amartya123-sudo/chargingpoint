@@ -1,0 +1,40 @@
+name: evpoint
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.4.4 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  mapmyindia_gl: ^0.3.1
+  # mappls_gl: ^1.1.0
+  location: ^7.0.0
+  # mappls_direction_plugin: ^1.0.0
+  # mappls_nearby_plugin: ^1.0.0
+  flutter_lints: ^2.0.0
+  flutter_tts: ^3.3.3
+  flutter_background_service: ^2.1.0
+  speech_to_text:
+  google_generative_ai: ^0.4.3
+  http: ^1.2.2
+  animated_text_kit: ^4.2.0
+  flutter_dotenv: ^5.1.0
+  provider: ^6.1.2
+  dot_curved_bottom_nav: ^0.0.1
+  dot_navigation_bar: ^1.0.2
+  google_fonts: ^6.2.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/image.png
+    - assets/logo.png
+    - assets/marker.png
+    - .env
