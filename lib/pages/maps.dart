@@ -1,6 +1,7 @@
 import 'package:evpoint/widgets/autosuggest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:location/location.dart';
 import 'package:mapmyindia_gl/mapmyindia_gl.dart';
 
@@ -18,22 +19,16 @@ class _MapsState extends State<Maps> {
   Symbol? _currentLocationSymbol;
   bool showAutoSuggestWidget = false;
 
-  static const String MAP_SDK_KEY = "8d6575c7a835972edece51fe1ecd6a5b";
-  static const String REST_API_KEY = "8d6575c7a835972edece51fe1ecd6a5b";
-  static const String ATLAS_CLIENT_ID =
-      "96dHZVzsAusSZnNdvHTKt3kM6hJynLHd4m5XvWN_uO2i4Xc8s5h6O29bFn8E4Jvh7jdJaFQ8UqaDCq1Gl48gcG4YnugYnMx3";
-  static const String ATLAS_CLIENT_SECRET =
-      "lrFxI-iSEg8XPsyflh-PlAK4sQ_9HQtr78n2Ws2b6doXIwvz4wnwQXXlNSabrRfnOBfQUHjjliHbNK34DRDSsUMwiLF74PbVzhldCe9vSzQ=";
-
   @override
   void initState() {
     super.initState();
     _fetchCurrentLocation();
 
-    MapmyIndiaAccountManager.setMapSDKKey(MAP_SDK_KEY);
-    MapmyIndiaAccountManager.setRestAPIKey(REST_API_KEY);
-    MapmyIndiaAccountManager.setAtlasClientId(ATLAS_CLIENT_ID);
-    MapmyIndiaAccountManager.setAtlasClientSecret(ATLAS_CLIENT_SECRET);
+    MapmyIndiaAccountManager.setMapSDKKey(dotenv.env["MAP_SDK_KEY"]!);
+    MapmyIndiaAccountManager.setRestAPIKey(dotenv.env["REST_API_KEY"]!);
+    MapmyIndiaAccountManager.setAtlasClientId(dotenv.env["ATLAS_CLIENT_ID"]!);
+    MapmyIndiaAccountManager.setAtlasClientSecret(dotenv.env["ATLAS_CLIENT_SECRET"]!);
+
   }
 
   Future<void> _fetchCurrentLocation() async {

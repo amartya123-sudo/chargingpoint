@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -7,7 +8,7 @@ class BackendService {
   final stt.SpeechToText _speech = stt.SpeechToText();
   final GenerativeModel model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
-    apiKey: 'AIzaSyDisFMqEcQdjiY72JarhFxCCwY3mGAYOzY',  // Replace with your actual API key
+    apiKey: dotenv.env["GEMINI_API_KEY"]!,  // Replace with your actual API key
   );
 
   bool _isListening = false;

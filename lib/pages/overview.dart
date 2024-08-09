@@ -1,420 +1,7 @@
-// import 'package:evpoint/pages/blank.dart';
-// import 'package:evpoint/pages/maps.dart';
-// import 'package:flutter/material.dart';
-// import 'package:evpoint/util/dim.dart';
-// import 'package:evpoint/pages/dashboard.dart';
-// import 'package:evpoint/service/background_service.dart';
-// import 'package:flutter_tts/flutter_tts.dart';
-
-// class Overview extends StatefulWidget {
-//   const Overview({super.key});
-
-//   @override
-//   _OverviewState createState() => _OverviewState();
-// }
-
-// class _OverviewState extends State<Overview>
-//     with SingleTickerProviderStateMixin {
-//   late AnimationController _controller;
-//   late Animation<double> _animation;
-//   bool _isPressed = false;
-
-//   final BackendService backendService = BackendService();
-//   String _text = '';
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller = AnimationController(
-//       duration: const Duration(milliseconds: 400),
-//       vsync: this,
-//     )..addListener(() {
-//         setState(() {});
-//       });
-//     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
-//   }
-
-//   void _listen() {
-//     backendService.listen(
-//       (text) {
-//         setState(() {
-//           _text = text;
-//           if (_text.isNotEmpty) {
-//             backendService.getResponse(_text, (response) {
-//               backendService.speak(response);
-//             }, (error) {
-//               print(error);
-//             });
-//           }
-//         });
-//       },
-//       () => print("Error occurred."),
-//     );
-//   }
-
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-
-//   void _onTap() {
-//     setState(() {
-//       _isPressed = !_isPressed;
-//       _controller.forward().then((value) => _navigateToPreviousPage());
-//     });
-//   }
-
-//   void _navigateToPreviousPage() {
-//     Navigator.of(context).pop(_createRoute());
-//   }
-
-//   Future<void> _onGPSButtonPressed(BuildContext context) async {
-//     _navigateToMapsPage(context);
-//     FlutterTts().speak("GPS Navigation");
-//   }
-
-//   void _navigateToMapsPage(BuildContext context) {
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(builder: (context) => const Maps()),
-//     );
-//   }
-
-//   Route _createRoute() {
-//     return PageRouteBuilder(
-//       pageBuilder: (context, animation, secondaryAnimation) =>
-//           const Dashboard(),
-//       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//         return FadeTransition(
-//           opacity: animation,
-//           child: ScaleTransition(
-//             scale: animation,
-//             child: child,
-//           ),
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Container(
-//           width: MediaQuery.of(context).size.width,
-//           decoration: const BoxDecoration(
-//             color: Color(0xFFCBE9ED),
-//           ),
-//           child: Stack(
-//             children: <Widget>[
-//               Positioned(
-//                 top: height(context, 0.395),
-//                 left: width(context, 0.074),
-//                 child: const SizedBox(
-//                   child: Text(
-//                     'LET\'S RIDE THE',
-//                     style: TextStyle(
-//                       color: Colors.black,
-//                       fontSize: 24.81,
-//                       fontFamily: 'Inter',
-//                       height: 0.03,
-//                       letterSpacing: 18.11,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.41),
-//                 left: width(context, 0.074),
-//                 child: const SizedBox(
-//                   width: 972,
-//                   height: 179.15,
-//                   child: Text(
-//                     'FUTURE',
-//                     style: TextStyle(
-//                       color: Colors.black,
-//                       fontSize: 114.84,
-//                       fontFamily: 'Inter',
-//                       height: 0,
-//                       letterSpacing: -4.59,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.6),
-//                 left: width(context, 0.074),
-//                 child: const SizedBox(
-//                   child: Text(
-//                     'Innovation & You',
-//                     style: TextStyle(
-//                       color: Color(0xFF42454A),
-//                       fontSize: 18.37,
-//                       fontFamily: 'Inter',
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 bottom: height(context, -0.025),
-//                 left: width(context, 0.45),
-//                 child: ClipOval(
-//                   child: Container(
-//                     height: 1400,
-//                     width: 1500,
-//                     decoration: const ShapeDecoration(
-//                       color: Color(0xFF9ADFD4),
-//                       shape: OvalBorder(),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.069),
-//                 left: width(context, 0.25),
-//                 child: ClipRect(
-//                   child: Container(
-//                     width: width(context, 0.364),
-//                     color: Colors.transparent,
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: <Widget>[
-//                         TextButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => const BlankPage(),
-//                               ),
-//                             );
-//                             FlutterTts().speak("Profile");
-//                           },
-//                           child: const Text(
-//                             'Profile',
-//                             style: TextStyle(
-//                               color: Colors.black,
-//                             ),
-//                           ),
-//                         ),
-//                         TextButton(
-//                           onPressed: () => _onGPSButtonPressed(context),
-//                           child: const Text(
-//                             'GPS',
-//                             style: TextStyle(
-//                               color: Colors.black,
-//                             ),
-//                           ),
-//                         ),
-//                         TextButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => const BlankPage(),
-//                               ),
-//                             );
-//                             FlutterTts().speak("APPS");
-//                           },
-//                           child: const Text(
-//                             'APPS',
-//                             style: TextStyle(
-//                               color: Colors.black,
-//                             ),
-//                           ),
-//                         ),
-//                         TextButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => const BlankPage(),
-//                               ),
-//                             );
-//                             FlutterTts().speak("Contact");
-//                           },
-//                           child: const Text(
-//                             'CONTACT',
-//                             style: TextStyle(
-//                               color: Colors.black,
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.8),
-//                 left: width(context, 0.2),
-//                 child: ClipRect(
-//                   child: Container(
-//                     decoration: ShapeDecoration(
-//                       color: const Color(0x267DB9CE),
-//                       shape: RoundedRectangleBorder(
-//                         side: const BorderSide(
-//                             width: 1.50, color: Color(0x5B86C4D9)),
-//                         borderRadius: BorderRadius.circular(17.11),
-//                       ),
-//                     ),
-//                     height: height(context, 0.141),
-//                     width: width(context, 0.635),
-//                     child: const Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                       children: [
-//                         Text(
-//                           '26°c\nTemperature',
-//                           style: TextStyle(
-//                             color: Color(0xFF3A3A3A),
-//                             fontSize: 16.24,
-//                             fontFamily: 'Inter',
-//                           ),
-//                         ),
-//                         Text(
-//                           '50km/h\nSpeed',
-//                           style: TextStyle(
-//                             color: Color(0xFF3A3A3A),
-//                             fontSize: 16.24,
-//                             fontFamily: 'Inter',
-//                           ),
-//                         ),
-//                         Text(
-//                           '80km\nBattery Range',
-//                           style: TextStyle(
-//                             color: Color(0xFF3A3A3A),
-//                             fontSize: 16.24,
-//                             fontFamily: 'Inter',
-//                           ),
-//                         ),
-//                         Text(
-//                           '3.5Hr\nCharging Time',
-//                           style: TextStyle(
-//                             color: Color(0xFF3A3A3A),
-//                             fontSize: 16.24,
-//                             fontFamily: 'Inter',
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.328),
-//                 left: width(context, 0.59),
-//                 child: const SizedBox(
-//                   child: Text(
-//                     'EV-2',
-//                     style: TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 175,
-//                       fontFamily: 'Familjen Grotesk',
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.205),
-//                 left: width(context, 0.421),
-//                 child: Container(
-//                   height: height(context, 0.6),
-//                   width: width(context, 0.5),
-//                   decoration: const BoxDecoration(
-//                     image: DecorationImage(
-//                       image: AssetImage("assets/image.png"),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.069),
-//                 // left: width(context, 0.9),
-//                 right: width(context, 0.09),
-//                 child: ElevatedButton(
-//                   child: const Icon(Icons.mic),
-//                   onPressed: () {
-//                     _listen();
-//                   },
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0),
-//                 right: width(context, 0),
-//                 child: ClipRect(
-//                   child: Container(
-//                     height: height(context, 0.5),
-//                     width: width(context, 0.07),
-//                     decoration: const BoxDecoration(
-//                       gradient: LinearGradient(
-//                         begin: Alignment(0.06, -1.00),
-//                         end: Alignment(-0.06, 1),
-//                         colors: [Color(0xFF99DFD3), Color(0xFF35A7A0)],
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 bottom: height(context, 0),
-//                 right: width(context, 0),
-//                 child: ClipRect(
-//                   child: Container(
-//                     height: height(context, 0.5),
-//                     width: width(context, 0.07),
-//                     decoration: const BoxDecoration(
-//                       gradient: LinearGradient(
-//                         begin: Alignment(0.00, -1.00),
-//                         end: Alignment(0, 1),
-//                         colors: [Color(0xFF88C7DD), Color(0xFF73ADC1)],
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Positioned(
-//                 top: height(context, 0.05),
-//                 left: width(context, 0.03),
-//                 child: GestureDetector(
-//                   onTap: _onTap,
-//                   child: Transform.rotate(
-//                     angle: _animation.value * 6.3, // 2 * pi for a full rotation
-//                     child: ClipOval(
-//                       child: Container(
-//                         width: width(context, 0.1),
-//                         height: height(context, 0.1),
-//                         decoration: const ShapeDecoration(
-//                           color: Color.fromARGB(54, 42, 31, 31),
-//                           shape: OvalBorder(),
-//                         ),
-//                         child: Transform(
-//                           transform: Matrix4.identity()
-//                             ..translate(0.0, 0.0)
-//                             ..rotateZ(0.01),
-//                           child: const Icon(
-//                             size: 70,
-//                             Icons.lock,
-//                             color: Colors.white,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
+import 'package:flutter/material.dart';
+import 'package:evpoint/pages/registration_page.dart';
 import 'package:evpoint/pages/blank.dart';
 import 'package:evpoint/pages/maps.dart';
-import 'package:evpoint/widgets/nearby.dart';
-import 'package:flutter/material.dart';
-import 'package:evpoint/util/dim.dart';
 import 'package:evpoint/pages/dashboard.dart';
 import 'package:evpoint/service/background_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -427,10 +14,13 @@ class Overview extends StatefulWidget {
   _OverviewState createState() => _OverviewState();
 }
 
-class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin {
+class _OverviewState extends State<Overview>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _isPressed = false;
+  bool _isLocked = false;
+  int _selectedIndex = 0;
 
   final BackendService backendService = BackendService();
   String _text = '';
@@ -446,42 +36,6 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
         setState(() {});
       });
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
-  }
-
-  void _listen(BuildContext context) {
-    setState(() {
-      _isListening = true;
-    });
-
-    backendService.listen(
-      (text) {
-        setState(() {
-          _text = text;
-          if (_text.isNotEmpty) {
-            backendService.getResponse(_text, (response) {
-              backendService.speak(response);
-            }, (error) {
-              print(error);
-            });
-          }
-        });
-      },
-      () {
-        // When listening stops, close the modal
-        if (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-        setState(() {
-          _isListening = false;
-        });
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   void _onTap() {
@@ -503,13 +57,14 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
   void _navigateToMapsPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NearbyUIWidget()),
+      MaterialPageRoute(builder: (context) => const Maps()),
     );
   }
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const Dashboard(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const Dashboard(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
           opacity: animation,
@@ -518,6 +73,35 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
             child: child,
           ),
         );
+      },
+    );
+  }
+
+  void _listen(BuildContext context) {
+    setState(() {
+      _isListening = true;
+    });
+
+    backendService.listen(
+      (text) {
+        setState(() {
+          _text = text;
+        });
+        if (_text.isNotEmpty) {
+          backendService.getResponse(_text, (response) {
+            backendService.speak(response);
+          }, (error) {
+            debugPrint(error.toString());
+          });
+        }
+      },
+      () {
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+        setState(() {
+          _isListening = false;
+        });
       },
     );
   }
@@ -537,8 +121,8 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                   'Listening...',
                   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
-                _isListening                            // Animation not working properly
+                const SizedBox(height: 20),
+                _isListening
                     ? AnimatedTextKit(
                         animatedTexts: [
                           TypewriterAnimatedText(
@@ -561,237 +145,109 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
     );
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RegistrationPage()),
+        );
+        break;
+      case 1:
+        _onGPSButtonPressed(context);
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BlankPage()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BlankPage()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: width,
           decoration: const BoxDecoration(
-            color: Color(0xFFCBE9ED),
+            gradient: LinearGradient(
+              colors: [
+                Color(0xff75A944),
+                Color(0xff79AC46),
+                Color(0xff599621),
+                Color(0xff75A944),
+                Color(0xff91B95F),
+                Color(0xff669F30),
+                Color(0xff3F870B)
+              ],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
           ),
           child: Stack(
             children: <Widget>[
               Positioned(
-                top: height(context, 0.395),
-                left: width(context, 0.074),
-                child: const SizedBox(
-                  child: Text(
-                    'LET\'S RIDE THE',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24.81,
-                      fontFamily: 'Inter',
-                      height: 0.03,
-                      letterSpacing: 18.11,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: height(context, 0.41),
-                left: width(context, 0.074),
-                child: const SizedBox(
-                  width: 972,
-                  height: 179.15,
-                  child: Text(
-                    'FUTURE',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 114.84,
-                      fontFamily: 'Inter',
-                      height: 0,
-                      letterSpacing: -4.59,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: height(context, 0.6),
-                left: width(context, 0.074),
-                child: const SizedBox(
-                  child: Text(
-                    'Innovation & You',
-                    style: TextStyle(
-                      color: Color(0xFF42454A),
-                      fontSize: 18.37,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: height(context, -0.025),
-                left: width(context, 0.45),
+                bottom: height * -0.025,
+                left: width * 0.45,
                 child: ClipOval(
                   child: Container(
-                    height: 1400,
-                    width: 1500,
+                    height: height * 1.4,
+                    width: width * 1.5,
                     decoration: const ShapeDecoration(
-                      color: Color(0xFF9ADFD4),
+                      gradient: LinearGradient(
+                          colors: [Color.fromARGB(255, 228, 226, 226), Color(0xffFFFFFF)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight),
                       shape: OvalBorder(),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                top: height(context, 0.069),
-                left: width(context, 0.25),
-                child: ClipRect(
-                  child: Container(
-                    width: width(context, 0.364),
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const BlankPage(),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            'Profile',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => _onGPSButtonPressed(context),
-                          child: const Text(
-                            'GPS',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const BlankPage(),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            'APPS',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const BlankPage(),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            'CONTACT',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                top: height * 0.328,
+                left: width * 0.59,
+                child: const Text(
+                  'EV-2',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 175,
+                    fontFamily: 'Familjen Grotesk',
                   ),
                 ),
               ),
               Positioned(
-                top: height(context, 0.8),
-                left: width(context, 0.2),
-                child: ClipRect(
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      color: const Color(0x267DB9CE),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            width: 1.50, color: Color(0x5B86C4D9)),
-                        borderRadius: BorderRadius.circular(17.11),
-                      ),
-                    ),
-                    height: height(context, 0.141),
-                    width: width(context, 0.635),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          '26°c\nTemperature',
-                          style: TextStyle(
-                            color: Color(0xFF3A3A3A),
-                            fontSize: 16.24,
-                            fontFamily: 'Inter',
-                          ),
-                        ),
-                        Text(
-                          '50km/h\nSpeed',
-                          style: TextStyle(
-                            color: Color(0xFF3A3A3A),
-                            fontSize: 16.24,
-                            fontFamily: 'Inter',
-                          ),
-                        ),
-                        Text(
-                          '80km\nBattery Range',
-                          style: TextStyle(
-                            color: Color(0xFF3A3A3A),
-                            fontSize: 16.24,
-                            fontFamily: 'Inter',
-                          ),
-                        ),
-                        Text(
-                          '3.5Hr\nCharging Time',
-                          style: TextStyle(
-                            color: Color(0xFF3A3A3A),
-                            fontSize: 16.24,
-                            fontFamily: 'Inter',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: height(context, 0.328),
-                left: width(context, 0.59),
-                child: const SizedBox(
-                  child: Text(
-                    'EV-2',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 175,
-                      fontFamily: 'Familjen Grotesk',
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: height(context, 0.205),
-                left: width(context, 0.421),
+                top: height * 0.205,
+                left: width * 0.421,
                 child: Container(
-                  height: height(context, 0.6),
-                  width: width(context, 0.5),
+                  height: height * 0.6,
+                  width: width * 0.5,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/image.png"),
+                      image: AssetImage('assets/image.png'),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                top: height(context, 0.069),
-                right: width(context, 0.09),
-                child: ElevatedButton(
+                top: height * 0.05,
+                right: width * 0.02,
+                child: FloatingActionButton(
+                  shape: const CircleBorder(),
                   child: const Icon(Icons.mic),
                   onPressed: () {
                     _showListeningModal(context);
@@ -800,67 +256,129 @@ class _OverviewState extends State<Overview> with SingleTickerProviderStateMixin
                 ),
               ),
               Positioned(
-                top: height(context, 0),
-                right: width(context, 0),
-                child: ClipRect(
-                  child: Container(
-                    height: height(context, 0.5),
-                    width: width(context, 0.07),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment(0.06, -1.00),
-                        end: Alignment(-0.06, 1),
-                        colors: [Color(0xFF99DFD3), Color(0xFF35A7A0)],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: height(context, 0),
-                right: width(context, 0),
-                child: ClipRect(
-                  child: Container(
-                    height: height(context, 0.5),
-                    width: width(context, 0.07),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment(0.00, -1.00),
-                        end: Alignment(0, 1),
-                        colors: [Color(0xFF88C7DD), Color(0xFF73ADC1)],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: height(context, 0.05),
-                left: width(context, 0.03),
+                top: height * 0.05,
+                left: width * 0.02,
                 child: GestureDetector(
                   onTap: _onTap,
-                  child: Transform.rotate(
-                    angle: _animation.value * 6.3, // 2 * pi for a full rotation
-                    child: ClipOval(
-                      child: Container(
-                        width: width(context, 0.1),
-                        height: height(context, 0.1),
-                        decoration: const ShapeDecoration(
-                          color: Color.fromARGB(54, 42, 31, 31),
-                          shape: OvalBorder(),
-                        ),
-                        child: Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, 0.0)
-                            ..rotateZ(0.01),
-                          child: const Icon(
-                            size: 70,
-                            Icons.lock,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                  child: IconButton(
+                    icon: Icon(
+                      _isLocked ? Icons.lock : Icons.lock_open,
+                      size: 50.0,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _isLocked = !_isLocked;
+                      });
+                      if (_isLocked) {
+                        await Future.delayed(const Duration(milliseconds: 300));
+                        if (context.mounted) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Dashboard(),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ),
+              ),
+              Positioned(
+                top: height * 0.3,
+                left: width * 0.15,
+                child: SizedBox(
+                  width: width * 0.2, // Adjust width to make the grid smaller
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4, // Reduce spacing
+                    crossAxisSpacing: 4, // Reduce spacing
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(), // Prevent scrolling
+                    padding: const EdgeInsets.all(8),
+                    children: [
+                      _buildGridTile('26°C', 'Temperature'),
+                      _buildGridTile('50km/h', 'Speed'),
+                      _buildGridTile('80km', 'Battery Range'),
+                      _buildGridTile('3.5Hr', 'Charging Time'),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                      ],
                     ),
                   ),
+                  child: BottomNavigationBar(
+                    backgroundColor: Colors.transparent, // Fully transparent
+                    elevation: 0, // Remove shadow
+                    type: BottomNavigationBarType.fixed,
+                    items: const [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.person),
+                        label: "",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.gps_fixed),
+                        label: "",
+                      ),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.apps), label: ""),
+                      BottomNavigationBarItem(
+                                              icon: Icon(Icons.contact_mail), label: ""),
+                ],
+                currentIndex: _selectedIndex,
+                unselectedItemColor: Colors.black,
+                selectedItemColor: Colors.black,
+                onTap: _onItemTapped,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+);
+}
+
+  Widget _buildGridTile(String value, String label) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent.withOpacity(0.1), // Make tile transparent
+          borderRadius: BorderRadius.circular(8), // Smaller rounded corners
+          border: Border.all(color: const Color.fromARGB(255, 228, 226, 226), width: 2), // Optional border
+          
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0, // Smaller font size
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0, // Smaller font size
                 ),
               ),
             ],
